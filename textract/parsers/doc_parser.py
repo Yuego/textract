@@ -14,6 +14,9 @@ class Parser(ShellParser):
         elif method == 'catdoc':
             return self.extract_catdoc(filename, **kwargs)
 
+        elif method == 'libreoffice':
+            return self.extract_libreoffice(filename, **kwargs)
+
         else:
             raise UnknownMethod(method)
 
@@ -22,5 +25,9 @@ class Parser(ShellParser):
         return stdout
 
     def extract_catdoc(self, filename, **kwargs):
-        stdout, stderr = self.run(['catdoc', filename])
+        stdout, stderr = self.run(['catdoc', '-w', filename])
+        return stdout
+
+    def extract_libreoffice(self, filename, **kwargs):
+        stdout, stderr = self.run(['libreoffice', '--headless', '--cat', filename])
         return stdout
