@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "textract"
+version = "1.7.0"
+description = "extract text from any document. no muss. no fuss."
+readme = "README.rst"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Dean Malmgren", email = "dean.malmgren@datascopeanalytics.com" },
+]
+dependencies = [
+    "argcomplete>=3.0",
+    "beautifulsoup4>=4.12",
+    "chardet>=5.0",
+    "docx2txt>=0.8",
+    "extract-msg>=0.48",
+    "pdfminer.six>=20231228",
+    "python-pptx>=0.6.23",
+    "SpeechRecognition>=3.10",
+    "openpyxl>=3.1",
+    "xlrd>=2.0",
+]
+
+[project.optional-dependencies]
+pocketsphinx = ["pocketsphinx>=0.5"]
+
+[project.scripts]
+textract = "textract.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/deanmalmgren/textract"
+Download = "https://github.com/deanmalmgren/textract/archives/master"

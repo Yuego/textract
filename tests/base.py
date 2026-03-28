@@ -2,8 +2,6 @@ import os
 import subprocess
 import tempfile
 import shutil
-import six
-
 import requests
 
 
@@ -22,7 +20,7 @@ class GenericUtilities(object):
         lines = text.splitlines()
         # Clean empty lines (fixes epub issue)
         lines = [line for line in lines if line.strip()]  # Clean empty lines
-        return six.b('\n').join(lines)
+        return b'\n'.join(lines)
 
 
 class BaseParserTestCase(GenericUtilities):
@@ -99,7 +97,7 @@ class BaseParserTestCase(GenericUtilities):
         )
         with open(temp_filename, 'rb') as stream:
             self.assertEqual(
-                six.b('').join(stream.read().split()),
+                b''.join(stream.read().split()),
                 self.get_standardized_text(),
                 "standardized text fails for %s" % self.extension,
             )
@@ -110,7 +108,7 @@ class BaseParserTestCase(GenericUtilities):
         import textract
         result = textract.process(self.standardized_text_filename)
         self.assertEqual(
-            six.b('').join(result.split()),
+            b''.join(result.split()),
             self.get_standardized_text(),
             "standardized text fails for %s" % self.extension,
         )
@@ -131,7 +129,7 @@ class BaseParserTestCase(GenericUtilities):
 
     def get_cli_options(self, **kwargs):
         option = ''
-        for key, val in six.iteritems(kwargs):
+        for key, val in kwargs.items():
             option += '--%s=%s ' % (key, val)
         return option
 
@@ -144,10 +142,8 @@ class BaseParserTestCase(GenericUtilities):
             with open(filename, 'rb') as stream:
                 standardized_text = stream.read()
         else:
-            standardized_text = six.b(
-                "the quick brown fox jumps over the lazy dog"
-            )
-        return six.b('').join(standardized_text.split())
+            standardized_text = b"the quick brown fox jumps over the lazy dog"
+        return b''.join(standardized_text.split())
 
     def assertSuccessfulCommand(self, command):
         self.assertEqual(

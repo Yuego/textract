@@ -11,6 +11,7 @@ import yaml
 from textract.colors import green, red
 
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def run_test(command):
     wrapped_command = "cd %s && %s" % (root_dir, command)
     pipe = subprocess.Popen(
@@ -25,12 +26,11 @@ def run_test(command):
 
 # load the script tests from the .travis.yml file
 with open(os.path.join(root_dir, '.travis.yml')) as stream:
-    travis_yml = yaml.load_all(stream.read())
-config = travis_yml.next()
+    config = yaml.safe_load(stream)
 tests = config['script']
 
 # run the tests
-if isinstance(tests, (str, unicode)):
+if isinstance(tests, str):
     returncode = run_test(tests)
 elif isinstance(tests, (list, tuple)):
     returncode = 0

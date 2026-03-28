@@ -7,8 +7,7 @@
 # for the vagrant user. Always change into the /vagrant directory on
 # the virtual machine to make it easy to start developing
 cat << EOF > /home/vagrant/.bash_profile
-export PATH=/vagrant/bin:$PATH
-export PYTHONPATH=/vagrant:$PYTHONPATH
+export PYTHONPATH=/vagrant/src:$PYTHONPATH
 cd /vagrant
 EOF
 

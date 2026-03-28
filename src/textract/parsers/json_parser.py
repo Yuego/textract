@@ -1,5 +1,4 @@
 import json
-import six
 
 from .utils import BaseParser
 
@@ -32,7 +31,7 @@ class Parser(BaseParser):
                 result += self.get_text(item) + ' '
             return result
 
-        if isinstance(deserialized_json, six.string_types):
+        if isinstance(deserialized_json, str):
             return deserialized_json
         else:
             return ''

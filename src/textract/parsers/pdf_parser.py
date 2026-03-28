@@ -1,7 +1,6 @@
 import os
 import queue
 import shutil
-import six
 import sys
 import threading
 
@@ -12,7 +11,7 @@ from ..exceptions import UnknownMethod, ShellError
 from .utils import ShellParser
 from .image import Parser as TesseractParser
 
-from distutils.spawn import find_executable
+from shutil import which as find_executable
 
 from typing import Dict
 
@@ -84,7 +83,7 @@ class Parser(ShellParser):
                 page_path = os.path.join(temp_dir, page)
                 page_content = TesseractParser().extract(page_path, **kwargs)
                 contents.append(page_content)
-            return six.b('').join(contents)
+            return b''.join(contents)
         finally:
             shutil.rmtree(temp_dir)
 
@@ -135,6 +134,6 @@ class Parser(ShellParser):
             for page_id, page_content in sorted(pages.items(), key=lambda item: item[0]):
                 contents.append(page_content)
 
-            return six.b('').join(contents)
+            return b''.join(contents)
         finally:
             shutil.rmtree(temp_dir)

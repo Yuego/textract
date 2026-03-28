@@ -1,6 +1,5 @@
 import unittest
 import os
-import six
 
 from . import base
 

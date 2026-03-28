@@ -7,14 +7,15 @@ import encodings
 import os
 import pkgutil
 import sys
-import six
 import re
 import glob
 
 import argcomplete
 
 from . import VERSION
-from .parsers import DEFAULT_ENCODING, _get_available_extensions
+from .parsers import process, DEFAULT_ENCODING, _get_available_extensions
+from .exceptions import CommandLineError
+from .colors import red
 
 
 class AddToNamespaceAction(argparse.Action):
@@ -32,7 +33,7 @@ class AddToNamespaceAction(argparse.Action):
 # Fix FileType to honor 'b' flag, see: https://bugs.python.org/issue14156
 class FileType(argparse.FileType):
     def __call__(self, string):
-        if string == '-' and six.PY3:
+        if string == '-':
             if 'r' in self._mode:
                 string = sys.stdin.fileno()
             elif 'w' in self._mode:
@@ -91,6 +92,21 @@ def get_parser():
     argcomplete.autocomplete(parser)
 
     return parser
+
+
+def main():
+    """Interpret the command-line arguments, process the document and
+    raise errors accordingly (with traceback suppressed).
+    """
+    parser = get_parser()
+    args = parser.parse_args()
+    try:
+        output = process(**vars(args))
+    except CommandLineError as ex:
+        sys.stderr.write(red(ex) + '\n')
+        sys.exit(1)
+    else:
+        args.output.write(output)
 
 
 def _get_available_encodings():

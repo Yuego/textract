@@ -3,8 +3,10 @@ os: linux
 
 language: python
 python:
-  - "2.7"
-  - "3.7"
+  - "3.10"
+  - "3.11"
+  - "3.12"
+  - "3.13"
 
 # install system dependencies here with apt-get.
 before_install:
@@ -14,24 +16,15 @@ before_install:
 # install python dependencies including this package in the travis
 # virtualenv
 install:
-
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.7 ]];
-        then ./provision/python3.sh;
-        fi
-  - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]];
-        then ./provision/python2.sh;
-        fi
+  - ./provision/python3.sh
   - pip install .[pocketsphinx]
 
-# commands to run the testing suite. if any of these fail, travic lets us know
+# commands to run the testing suite. if any of these fail, travis lets us know
 script:
   - cd tests && make && cd -
-  - nosetests --with-coverage --cover-package=textract
   - cd tests && pytest && cd -
-#  - pycodestyle textract/ bin/textract
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.7 ]];
-        then cd docs && make html && cd -;
-        fi
+#  - pycodestyle src/textract/
+  - cd docs && make html && cd -
 
 # commands to run after the tests successfully complete
 after_success:
