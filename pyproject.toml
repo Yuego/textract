@@ -11,6 +11,7 @@ license = "MIT"
 requires-python = ">=3.10"
 authors = [
     { name = "Dean Malmgren", email = "dean.malmgren@datascopeanalytics.com" },
+    { name = "Artem Vlasov", email = "root@proscript.ru" }
 ]
 dependencies = [
     "argcomplete>=3.0",
@@ -32,5 +33,5 @@ pocketsphinx = ["pocketsphinx>=0.5"]
 textract = "textract.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/deanmalmgren/textract"
-Download = "https://github.com/deanmalmgren/textract/archives/master"
+Homepage = "https://github.com/Yuego/textract"
+Download = "https://github.com/Yuego/textract/archives/master"
